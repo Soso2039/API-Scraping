@@ -1,0 +1,319 @@
+                How to run
+            
+Clone the Repository: If the app is stored in a version control system like Git, clone the repository to your local machine. Open your terminal and use the following command to clone it:
+
+  git clone <repository-url>
+
+Install Dependencies:
+
+  Navigate to the root directory of the project where you have React and Node.js code.
+  Inside the project root, there should be a package.json file for both the front-end and back-end. Use two terminals to navigate to these directories separately.
+  Run the following commands to install dependencies for both React and Node.js:     
+
+
+# For the React (front-end) directory
+cd React
+cd front
+npm install
+
+# For the Node.js (back-end) directory
+cd Nodejs
+npm install
+
+
+Run the app:
+
+  # In the Node.js (back-end) directory
+  node index.js
+
+  # In the React (front-end) directory
+  npm start
+
+Accessing the app in React should automatically send you to http://localhost:3000. 
+If you want to see the Node.js raw API, you can access http://localhost:3001.
+
+            
+                Documentaiton
+            
+            React Frontend (App.js)
+
+    1.Import Statements
+
+
+import React, { useState, useEffect } from 'react';
+import './App.css';
+import { HiMiniMagnifyingGlass as Glass } from 'react-icons/hi2';
+
+
+The code begins by importing necessary modules. It uses React for building the user interface, manages component state using 'useState', and performs side effects with 'useEffect'. 
+It also imports a custom CSS file and an icon from the 'react-icons' library.
+
+
+    2.Functional Component: App
+
+
+function App() {
+  // State variables
+  const [jsonData, setJsonData] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [searchQuery, setSearchQuery] = useState('');
+  const apiUrl = 'http://localhost:3001';
+
+  // useEffect for fetching data
+  useEffect(() => {
+    const fetchData = async () => {
+      // Fetch data from apiUrl
+      // Handle errors if any
+    };
+    fetchData(); // Trigger data fetching when the component mounts
+  }, []);
+
+  // Event handling functions (e.g., handleNext, handlePrevious, handleSearch)
+
+  // JSX rendering code
+}
+
+
+'App' is a functional React component.
+It manages three state variables: 'jsonData', 'currentIndex', and 'searchQuery'.
+The 'useEffect' is used to fetch data from the provided API endpoint when the component mounts.
+It also includes event handling functions: 'handleNext', 'handlePrevious', and 'handleSearch'.
+The component's render method returns JSX to display the fetched data and allow user interaction.
+
+
+    3.Handle Next and Handle Previous
+
+const handleNext = () => {
+  // Function to handle next item in the data
+};
+
+const handlePrevious = () => {
+  // Function to handle the previous item in the data
+};
+
+These functions are used to navigate through the data.
+They update the 'currentIndex' state variable to display the next or previous item.
+
+
+    4.Filtered Data
+
+const filteredData = jsonData.filter((item) =>
+  item.title.toLowerCase().includes(searchQuery.toLowerCase())
+);
+
+'filteredData' is an array that contains items from jsonData that match the search query.
+
+    5.Handle Search
+
+
+const handleSearch = (e) => {
+  // Function to handle search input and update state
+};
+
+
+'handleSearch' is a function that updates the 'searchQuery' state variable as the user types in the search input field.
+
+
+    6.JSX Rendering
+
+return (
+  <div>
+    {/* Conditional rendering based on jsonData length */}
+    {jsonData.length > 0 ? (
+      <div>
+        {/* Display search input with an icon */}
+        <div className="relative">
+          {/* Other UI elements based on search results */}
+        </div>
+      </div>
+    ) : (
+      {/* Loading state */}
+    )}
+  </div>
+);
+
+
+The component returns JSX that conditionally renders different elements based on the 'jsonData' length.
+It displays search input, search results, and navigation buttons.
+If there's no data, it displays a loading state.
+
+
+    7.Export Component
+
+export default App;
+
+The 'App' component is exported to be used in other parts of the application.
+
+
+            Express Backend (server.js)
+
+
+    1.Import Statements
+
+const express = require('express');
+const app = express();
+const puppeteer = require('puppeteer');
+const cheerio = require('cheerio');
+const port = 3001;
+const cors = require('cors');
+
+This part of the code imports the necessary Node.js modules for creating an Express server, web scraping with Puppeteer, 
+and parsing HTML with Cheerio. It also sets the server's port and enables CORS.
+
+
+    2.Express App Configuration
+
+app.use(cors());
+app.use(express.json());
+
+Middleware configuration for enabling CORS and JSON parsing in the Express app.
+
+
+    3.Constants
+
+const url = "https://wsa-test.vercel.app/";
+
+
+'url' stores the URL of the website to be scraped.
+
+
+    4.Handling GET Request
+
+app.get('', async (req, res) => {
+  // Code for handling GET requests
+});
+
+
+This is a route that handles GET requests to the root path ('/') of the server.
+
+
+
+    5.Puppeteer Web Scraping
+
+const browser = await puppeteer.launch({ headless: "new" });
+const page = await browser.newPage();
+// Code for web scraping using Puppeteer and Cheerio
+
+
+It launches a headless browser and opens a new page for web scraping.
+The code inside this section uses Puppeteer and Cheerio to extract data from the specified website.
+
+
+    6.Data Parsing and Transformation
+
+
+$('a > span').each((index, element) => {
+  // Code to extract data from specific elements
+});
+
+This code uses jQuery to select all '<a>' elements that contain a '<span>' element as their child. It then iterates over each of these elements.
+
+
+const titleDiv = $(element).parent('a');
+if (titleDiv) {
+  // Extract title and short description
+}
+
+
+Within the loop, it attempts to find the parent '<a>' element of the current '<span>' element. If found, it proceeds to extract the title and short description.
+
+
+let sentiment = "";
+const description = short_description.toLowerCase();
+if (description.includes("coping") || description.includes("critic")) {
+  sentiment = "negative";
+} else if (description.includes("unbias") || description includes("opinion")) {
+  sentiment = "neutral";
+} else if (description.includes("joyful") || description.includes("positive")) {
+  sentiment = "positive";
+}
+
+After extracting the short description, it evaluates the content of the description to determine a sentiment value based on certain keywords. 
+If the description includes words like "coping" or "critic," it assigns "negative" sentiment. If it includes words like "unbias" or "opinion," it assigns "neutral" sentiment. 
+If it includes words like "joyful" or "positive," it assigns "positive" sentiment.
+
+
+jsonData.push({ title, short_description, sentiment });
+
+Once the title, short description, and sentiment have been extracted and determined, this data is added to the 'jsonData' array as an object.
+
+
+async function getWordCountOnSite(href) {
+  // Function to count words on a site
+}
+
+This is an asynchronous function named 'getWordCountOnSite' that takes a 'href' parameter, presumably a URL.
+
+
+const newPage = await browser.newPage();
+try {
+  await newPage.goto(href, { waitUntil: 'domcontentloaded' });
+  await newPage.waitForSelector('body');
+  const siteContent = await newPage.content();
+  const wordCount = siteContent.split(/\s+/).length;
+  return wordCount;
+} catch (error) {
+  console.error("Error counting words on site:", error);
+  return 0;
+} finally {
+  await newPage.close();
+}
+
+Inside the 'getWordCountOnSite' function, a new page is created using 'browser.newPage()'.
+It navigates to the specified 'href', waits for the DOM content to be fully loaded, and then calculates the word count on the site by splitting the content using a regular expression that matches spaces and other whitespace characters. 
+The word count is returned, but if any error occurs during the process, it returns 0 and logs an error.
+
+
+await Promise.all(
+  $('a > img').map(async (index, element) => {
+    // Code to process image data
+  }).get()
+);
+
+
+This part of the code selects all '<a>' elements that contain an '<img>' element as their child. It then uses 'Promise.all' to asynchronously map and process each of these elements. 
+Inside the loop, it extracts image source ('src') and related link ('href') information, fetches the word count for each linked site, and adds this information to the corresponding 'jsonData' object.
+
+
+$('time').each((index, element) => {
+  // Code to extract time and area data
+});
+
+Finally, the code selects all '<time>' elements and iterates over each of them. 
+It extracts the 'datetime' attribute, identifies the parent element, and looks for sibling '<div>' elements to determine the "area." 
+The extracted time and area information is then added to the respective 'jsonData' object.
+
+
+    7.Sending JSON Response
+
+
+const filteredjsonData = jsonData.filter(item => item.title);
+res.json(filteredjsonData);
+
+After processing and filtering the data, the server responds with a JSON object containing the extracted and refined data.
+
+
+    8.Error Handling
+
+
+res.json(filteredjsonData);
+} catch (error) {
+  console.error(error);
+  res.status(500).json({ error: 'An error occurred while fetching data' });
+} finally {
+  await browser.close();
+}
+
+
+This part of the code handles errors that may occur during the data scraping and processing.
+
+    
+    9.Starting the Express Server
+
+
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});
+
+The Express server is started and listens on the specified port. A message is logged to indicate that the server is running.

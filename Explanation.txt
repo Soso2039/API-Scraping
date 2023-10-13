@@ -1,0 +1,10 @@
+I stepped in knowing nothing about what scraping is, let alone any of the technologies, frameworks, and libraries associated with scraping. 
+Now, I believe that I have a better understanding of what it is and how it works.
+
+I learned about Cheerio, Puppeteer, CORS, and Express. I chose to write the code in a more jQuery-like interface provided by the Cheerio library ($) to better understand 
+the parent-child-sibling relations between the tag elements. I also chose to send the data to a front-end React app for the familiarity React provides and to become more 
+accustomed to sending data from the back-end to the front-end. After everything was done, and I was able to display the correct data, I made the page look pretty with the help 
+of Tailwind. It was a fairly easy framework to learn, as it had many similarities with Bootstrap. The challenging part was getting used to the new wording system.
+
+Some challenges I had in this project were first realizing that I needed Puppeteer to correctly read the page, and the second was accessing the blog's content to count the words. 
+The features that I chose to add were the {next} and {previous} buttons to scroll through the blogs and the search bar.
